@@ -18,7 +18,7 @@ Halaman Dashboard
                     <div class="card mb-2">
                         <div class="card-body">
                             <div class="dashboard-card-title">Pelanggan</div>
-                            <div class="dashboard-card-subtitle">16,209</div>
+                            <div class="dashboard-card-subtitle">{{ number_format($customer) }}</div>
                         </div>
                     </div>
                 </div>
@@ -26,7 +26,7 @@ Halaman Dashboard
                     <div class="card mb-2">
                         <div class="card-body">
                             <div class="dashboard-card-title">Pendapatan</div>
-                            <div class="dashboard-card-subtitle">Rp 11,114,209</div>
+                            <div class="dashboard-card-subtitle">{{ number_format($revenue) }}</div>
                         </div>
                     </div>
                 </div>
@@ -34,7 +34,7 @@ Halaman Dashboard
                     <div class="card mb-2">
                         <div class="card-body">
                             <div class="dashboard-card-title">Transaksi</div>
-                            <div class="dashboard-card-subtitle">116,209</div>
+                            <div class="dashboard-card-subtitle">{{ number_format($transcation_count) }}</div>
                         </div>
                     </div>
                 </div>
@@ -42,51 +42,24 @@ Halaman Dashboard
             <div class="row mt-3">
                 <div class="col-12 mt-2">
                     <h5 class="mb-3">Transaksi Terakhir</h5>
-                    <a href="/dashboard-transaction-details.html" class="card card-list d-block">
+                    @foreach ($transaction_data as $transaction)
+                    <a href="{{ route('dashboard-transaction-detail', $transaction->id) }}">
                         <div class="card-body">
                             <div class="row">
                                 <div class="col-md-1">
-                                    <img src="/images/dashboard-icon-product-1.png" alt="" />
+                                    <img src="{{ Storage::url($transaction->product->galleries->first()->photos ?? '') }}"
+                                        class="w-75" />
                                 </div>
-                                <div class="col-md-4">Syrup Simple</div>
-                                <div class="col-md-3">Unuy Lady</div>
-                                <div class="col-md-3">25 Agustus 2021</div>
+                                <div class="col-md-4">{{ $transaction->product->name ?? '' }}</div>
+                                <div class="col-md-3">{{ $transaction->user->name ?? '' }}</div>
+                                <div class="col-md-3">{{ $transaction->created_at ?? '' }}</div>
                                 <div class="col-md-1 d-none d-block">
                                     <img src="/images/dashboard-arrow-right.svg" alt="" />
                                 </div>
                             </div>
                         </div>
                     </a>
-                    <a href="/dashboard-transaction-details.html" class="card card-list d-block">
-                        <div class="card-body">
-                            <div class="row">
-                                <div class="col-md-1">
-                                    <img src="/images/dashboard-icon-product-2.png" alt="" />
-                                </div>
-                                <div class="col-md-4">Patu Nike</div>
-                                <div class="col-md-3">Arsya Herdika</div>
-                                <div class="col-md-3">23 Agustus 2021</div>
-                                <div class="col-md-1 d-none d-block">
-                                    <img src="/images/dashboard-arrow-right.svg" alt="" />
-                                </div>
-                            </div>
-                        </div>
-                    </a>
-                    <a href="/dashboard-transaction-details.html" class="card card-list d-block">
-                        <div class="card-body">
-                            <div class="row">
-                                <div class="col-md-1">
-                                    <img src="/images/dashboard-icon-product-3.png" alt="" />
-                                </div>
-                                <div class="col-md-4">Sofa Nenek</div>
-                                <div class="col-md-3">Auria Hernisa</div>
-                                <div class="col-md-3">19 Agustus 2021</div>
-                                <div class="col-md-1 d-none d-block">
-                                    <img src="/images/dashboard-arrow-right.svg" alt="" />
-                                </div>
-                            </div>
-                        </div>
-                    </a>
+                    @endforeach
                 </div>
             </div>
         </div>

@@ -23,4 +23,12 @@ class TransactionDetail extends Model
     protected $hidden = [
         'password', 'remember_token',
     ];
+
+    public function product() {
+        return $this->hasOne(Product::class, 'id', 'products_id');
+    }
+
+    public function Transaction() {
+        return $this->hasOne(Product::class, 'id', 'transactions_id');
+    }
 }
